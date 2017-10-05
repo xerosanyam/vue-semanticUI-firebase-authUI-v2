@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img src="./assets/logo.png" style="vertical-align:middle;">
+    <span style="font-size:40px;margin:auto;">+</span>
+    <img src="./assets/semantic.png" style="vertical-align:middle;">
     <router-view></router-view>
   </div>
 </template>
