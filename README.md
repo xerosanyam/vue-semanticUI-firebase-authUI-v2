@@ -1,12 +1,15 @@
-# xylem
+# Vue + Semantic UI + Firebase
 
-> A Vue.js project
+> Template to quickly start development.
 
 ## Build Setup
 
 ``` bash
 # install dependencies
 npm install
+
+# update static/js/CONSTANTS.js by copying settings from firebase console.
+[firebase](http://firebase.google.com)
 
 # serve with hot reload at localhost:8080
 npm run dev

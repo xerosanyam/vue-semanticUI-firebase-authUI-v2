@@ -3,9 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+
 window.$ = window.jQuery = require('jquery')
 require('semantic-ui-css/semantic.css')
 require('semantic-ui-css/semantic.js')
+
+import firebase from 'firebase'
 
 Vue.config.productionTip = false
 
@@ -14,5 +17,8 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created () {
+    firebase.initializeApp(CONFIG)
+  }
 })
