@@ -2,6 +2,19 @@
 
 > Template to quickly start development.
 
+## Current behavior of setup
+
+### if you are signed in:
+- you try to access '/' : Redirect to 'Profile'
+- you try to access '/profile' : Allowed
+- you try to access '/asas' : Redirect to 'Page404'
+
+### if you are signed out:
+- you try to access '/' : Allowed
+- you try to access '/profile' : redirected to 'Home'
+- you try to access '/asas' : Redirect to 'Home'
+
+
 ## Build Setup
 
 ``` bash

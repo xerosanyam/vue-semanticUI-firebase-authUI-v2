@@ -9,6 +9,7 @@ require('semantic-ui-css/semantic.css')
 require('semantic-ui-css/semantic.js')
 
 import firebase from 'firebase'
+import CONSTANTS from './assets/js/CONSTANTS'
 
 Vue.config.productionTip = false
 
@@ -19,6 +20,20 @@ new Vue({
   template: '<App/>',
   components: { App },
   created () {
-    firebase.initializeApp(CONFIG)
+    var vm = this
+    firebase.initializeApp(CONSTANTS.CONFIG)
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        var lastVisited = sessionStorage['lastVisited']
+        if (!lastVisited || lastVisited === 'Home') {
+          lastVisited = 'Profile'
+        }
+        console.log('replacing', lastVisited)
+        vm.$router.replace({name: lastVisited})
+      } else {
+        console.log('replacing', 'Home')
+        vm.$router.replace({name: 'Home'})
+      }
+    })
   }
 })
