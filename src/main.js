@@ -19,6 +19,11 @@ new Vue({
   router,
   template: '<App/>',
   components: { App },
+  data () {
+    return {
+      ui: ''
+    }
+  },
   created () {
     var vm = this
     firebase.initializeApp(CONSTANTS.CONFIG)
