@@ -14,30 +14,38 @@ import CONSTANTS from './assets/js/CONSTANTS'
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
+console.log('reading mainjs')
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
   components: { App },
+  beforeCreate () {
+    console.log('creating mainjs')
+  },
+  mounted () {
+    console.log('mounted mainjs')
+  },
   data () {
     return {
-      ui: ''
+      ui: '',
+      user: '',
+      userSignedIn: 'checking'
     }
   },
   created () {
+    console.log('created mainjs')
     var vm = this
     firebase.initializeApp(CONSTANTS.CONFIG)
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        var lastVisited = sessionStorage['lastVisited']
-        if (!lastVisited || lastVisited === 'Home') {
-          lastVisited = 'Profile'
-        }
-        console.log('replacing', lastVisited)
-        vm.$router.replace({name: lastVisited})
+        vm.userSignedIn = 'yes'
+        vm.user = user
+        vm.$emit('loggedIn')
       } else {
-        console.log('replacing', 'Home')
-        vm.$router.replace({name: 'Home'})
+        vm.userSignedIn = 'no'
+        vm.user = ''
+        vm.$emit('loggedOut')
       }
     })
   }

@@ -1,10 +1,13 @@
 <template>
-  <div class="home">
+  <div class="home ui centered grid">
+    <div v-show="$root.userSignedIn=='no'">
       <br>
-      <h2>
-          Login
-      </h2>
+      <h1>Login</h1>
       <div id="firebaseui-auth-container"></div>
+    </div>
+    <div v-show="$root.user=='checking'">
+      Loading...
+    </div>
   </div>
 </template>
 
@@ -14,8 +17,14 @@ import firebaseui from 'firebaseui'
 require('firebaseui/dist/firebaseui.css')
 export default {
   name: 'home',
+  created () {
+    this.$root.$on('loggedIn', this.routeToProfile)
+  },
   mounted () {
     console.log('home mounted')
+    if (this.$root.userSignedIn === 'yes') {
+      this.routeToProfile()
+    }
     this.generateFirebaseAuthUI()
   },
   methods: {
@@ -48,11 +57,14 @@ export default {
         vm.$root.ui = new firebaseui.auth.AuthUI(firebase.auth())
       }
       vm.$root.ui.start('#firebaseui-auth-container', uiConfig)
+    },
+    routeToProfile () {
+      console.log('routing to profile')
+      this.$router.replace({'name': 'Profile'})
     }
   }
 }
 </script>
 
 <style scoped>
-
 </style>

@@ -1,15 +1,18 @@
 <template>
   <div class="profile ui container">
+    <div v-show="$root.userSignedIn=='yes'"></div>
     <br>
     <h1>{{ msg }}</h1>
     <table class="ui compact table">
-      <tr v-for="(value,key) in user">
-        <td>{{key}}</td>
-        <td>{{value}}</td>
+      <tr>
+        <td>displayName</td>
+        <td>{{$root.user.displayName}}</td>
+      </tr>
+      <tr>
+        <td>photoURL</td>
+        <td>{{$root.user.photoURL}}</td>
       </tr>
     </table>
-    <br>
-    <h3>Message from Firebase: {{message}}</h3>
     <br>
     <h2>Essential Links</h2>
     <ul>
@@ -17,6 +20,9 @@
       <li><a href="https://semantic-ui.com" target="_blank">Semantic-UI</a></li>
       <li><a href="" @click="signOut">SignOut</a></li>
     </ul>
+    <div v-show="$root.user=='checking'">
+      <h1>Progress bar</h1>
+    </div>
   </div>
 </template>
 
@@ -26,24 +32,25 @@ export default {
   name: 'profile',
   data () {
     return {
-      msg: 'You have been authenticated!',
-      message: 'Add CONFIG settings in static/CONSTANTS.js, for firebase to work!',
-      user: ''
+      msg: 'You have been authenticated!'
     }
+  },
+  created () {
+    this.$root.$on('loggedOut', this.routeToHome)
   },
   mounted () {
     console.log('profile mounted')
-    var vm = this
-    vm.user = firebase.auth().currentUser.providerData[0]
-    firebase.database().ref('message').once('value').then(function (snapshot) {
-      if (snapshot.val() !== null) {
-        vm.message = snapshot.val()
-      }
-    })
+    if (this.$root.userSignedIn === 'no') {
+      this.routeToHome()
+    }
   },
   methods: {
     signOut () {
       firebase.auth().signOut()
+    },
+    routeToHome () {
+      console.log('route to home')
+      this.$router.replace({'name': 'Home'})
     }
   }
 }

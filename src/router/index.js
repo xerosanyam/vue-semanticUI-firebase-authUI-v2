@@ -8,31 +8,25 @@ import Profile2 from '@/components/Profile2'
 
 import Page404 from '@/components/Page404'
 
-import GuardHome from './guard-home'
-import GuardOther from './guard-other'
-
 Vue.use(Router)
-
+// var vm = this
 const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Home',
-      component: Home,
-      beforeEnter: GuardHome
+      component: Home
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile,
-      beforeEnter: GuardOther
+      component: Profile
     },
     {
       path: '/profile2',
       name: 'Profile2',
-      component: Profile2,
-      beforeEnter: GuardOther
+      component: Profile2
     },
     {
       path: '/page404',
